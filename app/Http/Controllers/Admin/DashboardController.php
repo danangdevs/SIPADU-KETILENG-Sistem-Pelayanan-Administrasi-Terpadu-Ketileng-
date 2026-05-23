@@ -49,4 +49,26 @@ class DashboardController extends Controller
             'stats', 'penduduk_terbaru', 'verifikasi_pending', 'arsip_surat', 'bulan_ini'
         ));
     }
+
+    /**
+     * Update kata sandi Admin.
+     */
+    public function updatePassword(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password'         => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'Kata sandi saat ini salah!');
+        }
+
+        $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        $user->save();
+
+        return back()->with('success', 'Kata sandi Admin berhasil diperbarui!');
+    }
 }

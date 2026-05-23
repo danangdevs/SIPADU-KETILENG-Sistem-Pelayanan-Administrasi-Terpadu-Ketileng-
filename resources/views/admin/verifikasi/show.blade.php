@@ -23,7 +23,23 @@
                 </div>
                 <div>
                     <p class="text-sm text-slate-400 mb-1">Keperluan Pengajuan</p>
-                    <p class="font-medium text-slate-800 bg-slate-50 p-3 rounded-lg">{{ $pengajuan->keperluan }}</p>
+                    <div class="font-medium text-slate-800 bg-slate-50 p-3 rounded-lg leading-relaxed">
+                        @if($pengajuan->jenisSurat->kode === 'HAJATAN')
+                            @php
+                                $details = json_decode($pengajuan->keperluan, true);
+                            @endphp
+                            @if(is_array($details))
+                                <span class="block"><strong>Acara:</strong> {{ $details['acara'] }}</span>
+                                <span class="block"><strong>Hari/Tgl:</strong> {{ $details['hari'] }}, {{ $details['tanggal'] }}</span>
+                                <span class="block"><strong>Tempat:</strong> {{ $details['tempat'] }}</span>
+                                <span class="block"><strong>Hiburan:</strong> {{ $details['hiburan'] }}</span>
+                            @else
+                                {{ $pengajuan->keperluan }}
+                            @endif
+                        @else
+                            {{ $pengajuan->keperluan }}
+                        @endif
+                    </div>
                 </div>
             </div>
 

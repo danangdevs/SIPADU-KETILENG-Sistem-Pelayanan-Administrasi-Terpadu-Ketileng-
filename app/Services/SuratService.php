@@ -28,6 +28,7 @@ class SuratService
             'SKCK'     => 'surat.skck',
             'SKU'      => 'surat.sku',
             'DOMISILI' => 'surat.domisili',
+            'HAJATAN'  => 'surat.hajatan',
             default    => 'surat.domisili',
         };
 

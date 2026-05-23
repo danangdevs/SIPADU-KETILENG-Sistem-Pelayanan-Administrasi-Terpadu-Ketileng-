@@ -16,10 +16,10 @@
                 {{-- Mockup Preview Surat --}}
                 <div class="bg-white w-[90%] max-w-[600px] my-10 p-12 shadow-sm relative">
                     <div class="text-center border-b-2 border-black pb-4 mb-8">
-                        <h1 class="text-lg font-bold uppercase">Pemerintah Kabupaten Tegal</h1>
-                        <h2 class="text-lg font-bold uppercase">Kecamatan Kramat</h2>
-                        <h3 class="text-xl font-bold uppercase">Desa Ketileng</h3>
-                        <p class="text-sm">Jl. Raya Ketileng, Kec. Kramat, Kab. Tegal</p>
+                        <h1 class="text-sm font-bold uppercase">PEMERINTAH KABUPATEN TEGAL</h1>
+                        <h2 class="text-sm font-bold uppercase">KECAMATAN KRAMAT</h2>
+                        <h3 class="text-base font-bold uppercase">KANTOR KEPALA DESA KETILENG</h3>
+                        <p class="text-xs font-semibold mt-1">Jl. Sandrageni No. 1 Ketileng Kramat Tegal Kode Pos 52181</p>
                     </div>
                     
                     <div class="text-center mb-8">
@@ -28,17 +28,42 @@
                     </div>
 
                     <div class="text-sm leading-relaxed mb-6 space-y-2">
-                        <p>Yang bertanda tangan di bawah ini Kepala Desa Ketileng, Kecamatan Kramat, Kabupaten Tegal menerangkan dengan sebenarnya bahwa:</p>
-                        <table class="w-full ml-4">
-                            <tr><td class="w-40 py-1">Nama Lengkap</td><td>: <strong>{{ $pengajuan->penduduk->nama }}</strong></td></tr>
-                            <tr><td class="py-1">NIK / No. KK</td><td>: {{ $pengajuan->penduduk->nik }} / {{ $pengajuan->penduduk->no_kk }}</td></tr>
-                            <tr><td class="py-1">Tempat, Tgl Lahir</td><td>: {{ $pengajuan->penduduk->tempat_lahir }}, {{ $pengajuan->penduduk->tanggal_lahir->format('d M Y') }}</td></tr>
-                            <tr><td class="py-1">Pekerjaan</td><td>: {{ $pengajuan->penduduk->pekerjaan }}</td></tr>
-                            <tr><td class="py-1 align-top">Alamat</td><td>: {{ $pengajuan->penduduk->alamat_lengkap }}</td></tr>
-                        </table>
-                        <p class="mt-4">Orang tersebut di atas benar-benar warga Desa Ketileng yang berdomisili di alamat tersebut. Surat ini dibuat untuk keperluan:</p>
-                        <p class="font-semibold text-center italic my-4">"{{ $pengajuan->keperluan }}"</p>
-                        <p>Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
+                        @if($pengajuan->jenisSurat->kode === 'HAJATAN')
+                            @php
+                                $details = json_decode($pengajuan->keperluan, true);
+                                if (!is_array($details)) {
+                                    $details = ['acara' => $pengajuan->keperluan, 'hari' => '-', 'tanggal' => '-', 'tempat' => '-', 'hiburan' => '-'];
+                                }
+                            @endphp
+                            <p>Yang bertanda tangan di bawah ini Kepala Desa Ketileng, Kecamatan Kramat, Kabupaten Tegal memberikan <strong>IZIN HAJATAN</strong> kepada:</p>
+                            <table class="w-full ml-4 mb-4">
+                                <tr><td class="w-40 py-1">Nama Lengkap</td><td>: <strong>{{ $pengajuan->penduduk->nama }}</strong></td></tr>
+                                <tr><td class="py-1">Umur</td><td>: {{ $pengajuan->penduduk->umur }} Tahun</td></tr>
+                                <tr><td class="py-1">Pekerjaan</td><td>: {{ $pengajuan->penduduk->pekerjaan }}</td></tr>
+                                <tr><td class="py-1 align-top">Alamat</td><td>: {{ $pengajuan->penduduk->alamat_lengkap }}</td></tr>
+                            </table>
+                            <p class="mt-2">Untuk menyelenggarakan acara/hajatan yang akan dilaksanakan pada:</p>
+                            <table class="w-full ml-4 mb-4">
+                                <tr><td class="w-40 py-1">Acara / Hajatan</td><td>: <strong>{{ $details['acara'] }}</strong></td></tr>
+                                <tr><td class="py-1">Hari</td><td>: {{ $details['hari'] }}</td></tr>
+                                <tr><td class="py-1">Tanggal</td><td>: {{ $details['tanggal'] }}</td></tr>
+                                <tr><td class="py-1">Tempat</td><td>: {{ $details['tempat'] }}</td></tr>
+                                <tr><td class="py-1">Hiburan</td><td>: {{ $details['hiburan'] }}</td></tr>
+                            </table>
+                            <p class="mt-2">Demikian Surat Izin Hajatan ini diberikan untuk dapat dipergunakan sebagaimana mestinya.</p>
+                        @else
+                            <p>Yang bertanda tangan di bawah ini Kepala Desa Ketileng, Kecamatan Kramat, Kabupaten Tegal menerangkan dengan sebenarnya bahwa:</p>
+                            <table class="w-full ml-4">
+                                <tr><td class="w-40 py-1">Nama Lengkap</td><td>: <strong>{{ $pengajuan->penduduk->nama }}</strong></td></tr>
+                                <tr><td class="py-1">NIK / No. KK</td><td>: {{ $pengajuan->penduduk->nik }} / {{ $pengajuan->penduduk->no_kk }}</td></tr>
+                                <tr><td class="py-1">Tempat, Tgl Lahir</td><td>: {{ $pengajuan->penduduk->tempat_lahir }}, {{ $pengajuan->penduduk->tanggal_lahir->format('d M Y') }}</td></tr>
+                                <tr><td class="py-1">Pekerjaan</td><td>: {{ $pengajuan->penduduk->pekerjaan }}</td></tr>
+                                <tr><td class="py-1 align-top">Alamat</td><td>: {{ $pengajuan->penduduk->alamat_lengkap }}</td></tr>
+                            </table>
+                            <p class="mt-4">Orang tersebut di atas benar-benar warga Desa Ketileng yang berdomisili di alamat tersebut. Surat ini dibuat untuk keperluan:</p>
+                            <p class="font-semibold text-center italic my-4">"{{ $pengajuan->keperluan }}"</p>
+                            <p>Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
+                        @endif
                     </div>
 
                     <div class="flex justify-end mt-16">

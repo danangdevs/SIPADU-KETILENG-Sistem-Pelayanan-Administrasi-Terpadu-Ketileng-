@@ -15,6 +15,26 @@ use Illuminate\Support\Facades\Route;
 // ── HALAMAN UTAMA ──────────────────────────────────────────────────────────
 try {
     \App\Models\User::where('role', 'kades')->where('name', '!=', 'MASRUDIYANTO AM.d')->update(['name' => 'MASRUDIYANTO AM.d']);
+    \App\Models\JenisSurat::firstOrCreate(
+        ['kode' => 'HAJATAN'],
+        [
+            'nama'        => 'Surat Izin Hajatan',
+            'deskripsi'   => 'Surat keterangan izin untuk menyelenggarakan acara/hajatan warga.',
+            'persyaratan' => ['ktp', 'kk'],
+            'aktif'       => true,
+        ]
+    );
+} catch (\Exception $e) {}
+
+try {
+    $src = 'C:\\Users\\SMK BINA NUSA SLAWI\\.gemini\\antigravity\\brain\\02cbfe48-9004-41c7-b7e1-1286f1a7a2c6\\bg_desa_1779555514825.png';
+    $destDir = public_path('images');
+    if (!file_exists($destDir)) {
+        mkdir($destDir, 0755, true);
+    }
+    if (file_exists($src) && !file_exists(public_path('images/bg_desa.png'))) {
+        copy($src, public_path('images/bg_desa.png'));
+    }
 } catch (\Exception $e) {}
 
 Route::get('/', fn() => redirect()->route('login'));
@@ -48,6 +68,7 @@ Route::middleware(['auth', 'role:warga'])->prefix('warga')->name('warga.')->grou
 // ── ADMIN ──────────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    Route::post('/update-password', [AdminDashboard::class, 'updatePassword'])->name('update-password');
 
     // CRUD Penduduk
     Route::resource('penduduk', PendudukController::class)->except(['show']);

@@ -40,10 +40,10 @@
             <div class="card p-0 overflow-hidden bg-slate-100 flex items-center justify-center min-h-[600px] border border-slate-200 relative">
                 <div class="bg-white w-[90%] max-w-[600px] my-10 p-12 shadow-sm relative">
                     <div class="text-center border-b-2 border-black pb-4 mb-8">
-                        <h1 class="text-lg font-bold uppercase">Pemerintah Kabupaten Tegal</h1>
-                        <h2 class="text-lg font-bold uppercase">Kecamatan Kramat</h2>
-                        <h3 class="text-xl font-bold uppercase">Desa Ketileng</h3>
-                        <p class="text-sm">Jl. Raya Ketileng, Kec. Kramat, Kab. Tegal</p>
+                        <h1 class="text-sm font-bold uppercase">PEMERINTAH KABUPATEN TEGAL</h1>
+                        <h2 class="text-sm font-bold uppercase">KECAMATAN KRAMAT</h2>
+                        <h3 class="text-base font-bold uppercase">KANTOR KEPALA DESA KETILENG</h3>
+                        <p class="text-xs font-semibold mt-1">Jl. Sandrageni No. 1 Ketileng Kramat Tegal Kode Pos 52181</p>
                     </div>
                     
                     <div class="text-center mb-8">

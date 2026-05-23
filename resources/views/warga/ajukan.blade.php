@@ -50,15 +50,76 @@
             @csrf
             <input type="hidden" name="jenis_surat_id" value="{{ $jenisSurat->id }}">
 
-            {{-- Keperluan --}}
-            <div>
-                <label class="form-label">Keperluan / Tujuan Pengajuan <span class="text-red-500">*</span></label>
-                <textarea name="keperluan" rows="3"
-                          class="form-input resize-none @error('keperluan') border-red-400 @enderror"
-                          placeholder="Contoh: Untuk keperluan melamar pekerjaan di PT. ..."
-                          required>{{ old('keperluan') }}</textarea>
-                @error('keperluan')<p class="form-error">{{ $message }}</p>@enderror
-            </div>
+            @if($jenisSurat->kode === 'HAJATAN')
+                <input type="hidden" name="keperluan" id="hidden_keperluan">
+                <div class="space-y-4 bg-emerald-50/50 border border-emerald-100 rounded-xl p-5">
+                    <p class="text-sm font-semibold text-emerald-800">Detail Acara Hajatan</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Jenis Acara / Hajatan <span class="text-red-500">*</span></label>
+                            <input type="text" id="hj_acara" class="form-input" placeholder="Contoh: Tasyakuran Khitan / Pernikahan" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Hiburan <span class="text-red-500">*</span></label>
+                            <input type="text" id="hj_hiburan" class="form-input" placeholder="Contoh: Organ Tunggal atau -" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Hari Acara <span class="text-red-500">*</span></label>
+                            <input type="text" id="hj_hari" class="form-input" placeholder="Contoh: Sabtu - Minggu" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Tanggal Acara <span class="text-red-500">*</span></label>
+                            <input type="text" id="hj_tanggal" class="form-input" placeholder="Contoh: 20 - 21 September 2025" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label">Tempat Acara <span class="text-red-500">*</span></label>
+                        <input type="text" id="hj_tempat" class="form-input" placeholder="Contoh: Rumah Kediaman RT 03 RW 01 Desa Ketileng" required>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const hiddenInput = document.getElementById('hidden_keperluan');
+                        const hjAcara = document.getElementById('hj_acara');
+                        const hjHiburan = document.getElementById('hj_hiburan');
+                        const hjHari = document.getElementById('hj_hari');
+                        const hjTanggal = document.getElementById('hj_tanggal');
+                        const hjTempat = document.getElementById('hj_tempat');
+
+                        function updateHidden() {
+                            const data = {
+                                acara: hjAcara.value.trim(),
+                                hiburan: hjHiburan.value.trim(),
+                                hari: hjHari.value.trim(),
+                                tanggal: hjTanggal.value.trim(),
+                                tempat: hjTempat.value.trim()
+                            };
+                            hiddenInput.value = JSON.stringify(data);
+                        }
+
+                        hjAcara.addEventListener('input', updateHidden);
+                        hjHiburan.addEventListener('input', updateHidden);
+                        hjHari.addEventListener('input', updateHidden);
+                        hjTanggal.addEventListener('input', updateHidden);
+                        hjTempat.addEventListener('input', updateHidden);
+                        
+                        // Initial trigger
+                        updateHidden();
+                    });
+                </script>
+            @else
+                {{-- Keperluan --}}
+                <div>
+                    <label class="form-label">Keperluan / Tujuan Pengajuan <span class="text-red-500">*</span></label>
+                    <textarea name="keperluan" rows="3"
+                              class="form-input resize-none @error('keperluan') border-red-400 @enderror"
+                              placeholder="Contoh: Untuk keperluan melamar pekerjaan di PT. ..."
+                              required>{{ old('keperluan') }}</textarea>
+                    @error('keperluan')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+            @endif
 
             {{-- Upload KTP --}}
             <div>

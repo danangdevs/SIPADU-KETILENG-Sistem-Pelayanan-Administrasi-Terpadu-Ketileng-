@@ -4,29 +4,30 @@
     <meta charset="UTF-8">
     <title>Surat Pengantar SKCK</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; margin: 2cm; }
+        body { font-family: 'Times New Roman', Times, serif; font-size: 10.5pt; line-height: 1.25; margin: 0.8cm 2cm; }
         .text-center { text-align: center; }
         .font-bold { font-weight: bold; }
         .uppercase { text-transform: uppercase; }
         .underline { text-decoration: underline; }
-        .header { border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+        .header { margin-bottom: 8px; }
         .header h1, .header h2, .header h3 { margin: 0; }
-        .header h1 { font-size: 16pt; }
-        .header h2 { font-size: 14pt; }
-        .header h3 { font-size: 18pt; }
-        .header p { margin: 5px 0 0 0; font-size: 11pt; }
-        .title-section { margin-bottom: 30px; }
-        .title-section h4 { margin: 0; font-size: 14pt; }
-        .title-section p { margin: 5px 0 0 0; }
-        .content { margin-bottom: 30px; text-align: justify; }
-        table { width: 100%; border-collapse: collapse; }
-        table td { vertical-align: top; padding: 2px 5px; }
-        .w-30 { width: 30%; }
+        .header h1 { font-size: 14.5pt; }
+        .header h2 { font-size: 12.5pt; }
+        .header h3 { font-size: 15.5pt; }
+        .header p { margin: 2px 0 0 0; font-size: 9.5pt; }
+        .title-section { margin-bottom: 12px; }
+        .title-section h4 { margin: 0; font-size: 12pt; }
+        .title-section p { margin: 2px 0 0 0; font-size: 9.5pt; }
+        .content { margin-bottom: 12px; text-align: justify; }
+        .content p { margin: 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+        table td { vertical-align: top; padding: 1.5px 5px; }
+        .w-30 { width: 28%; }
         .w-2 { width: 2%; }
-        .signature-section { width: 100%; margin-top: 50px; page-break-inside: avoid; }
-        .signature-box { width: 40%; float: right; text-align: center; }
-        .qr-box { margin-top: 10px; margin-bottom: 10px; }
-        .qr-box img { width: 100px; height: 100px; }
+        .signature-section { width: 100%; margin-top: 15px; page-break-inside: avoid; }
+        .signature-box { width: 45%; float: right; text-align: center; }
+        .qr-box { margin-top: 5px; margin-bottom: 5px; }
+        .qr-box img { width: 75px; height: 75px; }
         .clear { clear: both; }
     </style>
 </head>

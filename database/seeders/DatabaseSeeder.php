@@ -132,36 +132,54 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ── JENIS SURAT ────────────────────────────────────────────
-        JenisSurat::create([
-            'kode'        => 'DOMISILI',
-            'nama'        => 'Surat Keterangan Domisili',
-            'deskripsi'   => 'Keterangan tempat tinggal saat ini.',
-            'persyaratan' => ['ktp', 'kk'],
-            'aktif'       => true,
-        ]);
+        JenisSurat::firstOrCreate(
+            ['kode' => 'DOMISILI'],
+            [
+                'nama'        => 'Surat Keterangan Domisili',
+                'deskripsi'   => 'Keterangan tempat tinggal saat ini.',
+                'persyaratan' => ['ktp', 'kk'],
+                'aktif'       => true,
+            ]
+        );
 
-        JenisSurat::create([
-            'kode'        => 'SKCK',
-            'nama'        => 'Surat Pengantar SKCK',
-            'deskripsi'   => 'Surat pengantar untuk pembuatan SKCK di kepolisian.',
-            'persyaratan' => ['ktp', 'kk'],
-            'aktif'       => true,
-        ]);
+        JenisSurat::firstOrCreate(
+            ['kode' => 'SKCK'],
+            [
+                'nama'        => 'Surat Pengantar SKCK',
+                'deskripsi'   => 'Surat pengantar untuk pembuatan SKCK di kepolisian.',
+                'persyaratan' => ['ktp', 'kk'],
+                'aktif'       => true,
+            ]
+        );
 
-        JenisSurat::create([
-            'kode'        => 'SKTM',
-            'nama'        => 'Surat Keterangan Tidak Mampu',
-            'deskripsi'   => 'Surat keterangan tidak mampu secara ekonomi.',
-            'persyaratan' => ['ktp', 'kk'],
-            'aktif'       => true,
-        ]);
+        JenisSurat::firstOrCreate(
+            ['kode' => 'SKTM'],
+            [
+                'nama'        => 'Surat Keterangan Tidak Mampu',
+                'deskripsi'   => 'Surat keterangan tidak mampu secara ekonomi.',
+                'persyaratan' => ['ktp', 'kk'],
+                'aktif'       => true,
+            ]
+        );
 
-        JenisSurat::create([
-            'kode'        => 'SKU',
-            'nama'        => 'Surat Keterangan Usaha',
-            'deskripsi'   => 'Surat keterangan izin usaha mikro (SKU).',
-            'persyaratan' => ['ktp', 'kk'],
-            'aktif'       => true,
-        ]);
+        JenisSurat::firstOrCreate(
+            ['kode' => 'SKU'],
+            [
+                'nama'        => 'Surat Keterangan Usaha',
+                'deskripsi'   => 'Surat keterangan izin usaha mikro (SKU).',
+                'persyaratan' => ['ktp', 'kk'],
+                'aktif'       => true,
+            ]
+        );
+
+        JenisSurat::firstOrCreate(
+            ['kode' => 'HAJATAN'],
+            [
+                'nama'        => 'Surat Izin Hajatan',
+                'deskripsi'   => 'Surat keterangan izin untuk menyelenggarakan acara/hajatan warga.',
+                'persyaratan' => ['ktp', 'kk'],
+                'aktif'       => true,
+            ]
+        );
     }
 }

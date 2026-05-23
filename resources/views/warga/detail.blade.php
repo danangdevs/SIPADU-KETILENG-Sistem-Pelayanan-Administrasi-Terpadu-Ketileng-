@@ -23,7 +23,26 @@
         <div class="space-y-3 text-sm">
             <div class="grid grid-cols-2 gap-4">
                 <div><p class="text-slate-400">Tanggal Pengajuan</p><p class="font-medium">{{ $pengajuan->created_at->format('d M Y, H:i') }}</p></div>
-                <div><p class="text-slate-400">Keperluan</p><p class="font-medium">{{ $pengajuan->keperluan }}</p></div>
+                <div>
+                    <p class="text-slate-400">Keperluan</p>
+                    <p class="font-medium text-slate-800 leading-relaxed">
+                        @if($pengajuan->jenisSurat->kode === 'HAJATAN')
+                            @php
+                                $details = json_decode($pengajuan->keperluan, true);
+                            @endphp
+                            @if(is_array($details))
+                                <span class="block"><strong>Acara:</strong> {{ $details['acara'] }}</span>
+                                <span class="block"><strong>Hari/Tgl:</strong> {{ $details['hari'] }}, {{ $details['tanggal'] }}</span>
+                                <span class="block"><strong>Tempat:</strong> {{ $details['tempat'] }}</span>
+                                <span class="block"><strong>Hiburan:</strong> {{ $details['hiburan'] }}</span>
+                            @else
+                                {{ $pengajuan->keperluan }}
+                            @endif
+                        @else
+                            {{ $pengajuan->keperluan }}
+                        @endif
+                    </p>
+                </div>
             </div>
         </div>
     </div>

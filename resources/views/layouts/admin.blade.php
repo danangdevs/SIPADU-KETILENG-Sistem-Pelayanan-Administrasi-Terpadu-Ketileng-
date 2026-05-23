@@ -66,6 +66,14 @@
                 pointer-events: none !important;
             }
         }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.15s ease-out;
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-[Inter]">
@@ -110,15 +118,6 @@
                 Arsip Surat
             </a>
         </nav>
-        <div class="border-t border-slate-800 p-4 space-y-1">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="sidebar-link w-full text-red-400 hover:text-red-300 hover:bg-red-900/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                    Keluar
-                </button>
-            </form>
-        </div>
     </aside>
 
     {{-- MAIN --}}
@@ -135,13 +134,36 @@
             <div class="flex items-center gap-3">
                 @php $notif = \App\Models\PengajuanSurat::where('status','menunggu')->count(); @endphp
                 <div class="relative">
-                    <button class="p-2 text-slate-400 hover:text-slate-600 relative">
+                    <a href="{{ route('admin.verifikasi.index') }}" class="p-2 text-slate-400 hover:text-slate-600 relative block" title="Verifikasi Berkas Masuk">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                         @if($notif > 0)<span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">{{ $notif }}</span>@endif
-                    </button>
+                    </a>
                 </div>
-                <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-sm font-bold">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                <div class="relative" style="position: relative;">
+                    <button id="profile-dropdown-btn" class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:bg-emerald-600 transition-colors focus:outline-none">
+                        {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                    </button>
+                    
+                    {{-- Dropdown Card --}}
+                    <div id="profile-dropdown-menu" class="hidden absolute mt-2 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 z-50 animate-fade-in-down" style="right: 0;">
+                        <div class="px-4 py-2.5 border-b border-slate-50 text-left">
+                            <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Nama Akun</p>
+                            <p class="text-sm font-bold text-slate-800 truncate mt-0.5">{{ auth()->user()->name }}</p>
+                            <p class="text-[11px] text-slate-500 font-medium truncate mt-0.5">Administrator Desa</p>
+                        </div>
+                        <button type="button" id="open-password-modal-btn" class="flex items-center gap-2 w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors focus:outline-none">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            Ganti Password
+                        </button>
+                        <hr class="border-slate-50 my-1">
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"/></svg>
+                                Keluar Aplikasi
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </header>
@@ -156,6 +178,52 @@
         <main class="flex-1 p-4 md:p-8">@yield('content')</main>
     </div>
 </div>
+{{-- ── MODAL GANTI PASSWORD ADMIN ── --}}
+<div id="password-modal" class="hidden fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4" style="background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); transition: opacity 0.25s ease;">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform transition-all animate-fade-in-down">
+        {{-- Header Modal --}}
+        <div class="px-6 py-4.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Ganti Password Admin
+            </h3>
+            <button type="button" id="close-password-modal-btn" class="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        {{-- Form Modal --}}
+        <form method="POST" action="{{ route('admin.update-password') }}" class="p-6 space-y-4 text-left">
+            @csrf
+            
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5" for="current_password">Password Sekarang</label>
+                <input type="password" name="current_password" id="current_password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all" placeholder="Masukkan password saat ini">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5" for="password">Password Baru</label>
+                <input type="password" name="password" id="password" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all" placeholder="Minimal 6 karakter">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5" for="password_confirmation">Konfirmasi Password Baru</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all" placeholder="Ulangi password baru">
+            </div>
+
+            <div class="border-t border-slate-100 pt-4 mt-6 flex items-center justify-end gap-2.5">
+                <button type="button" id="cancel-password-modal-btn" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-sm font-semibold hover:bg-slate-50 transition-colors">
+                    Batal
+                </button>
+                <button type="submit" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-bold shadow-sm transition-colors flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @livewireScripts
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -171,6 +239,53 @@
 
             toggleBtn.addEventListener('click', toggleSidebar);
             overlay.addEventListener('click', toggleSidebar);
+        }
+
+        // ── PROFILE DROPDOWN MENU INTERACTION ──
+        const profileBtn = document.getElementById('profile-dropdown-btn');
+        const profileMenu = document.getElementById('profile-dropdown-menu');
+
+        if (profileBtn && profileMenu) {
+            profileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
+                    profileMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // ── PASSWORD MODAL INTERACTION ──
+        const openModalBtn = document.getElementById('open-password-modal-btn');
+        const closeModalBtn = document.getElementById('close-password-modal-btn');
+        const cancelModalBtn = document.getElementById('cancel-password-modal-btn');
+        const modal = document.getElementById('password-modal');
+
+        if (openModalBtn && modal) {
+            openModalBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Sembunyikan dropdown dulu
+                profileMenu.classList.add('hidden');
+                // Tampilkan modal
+                modal.classList.remove('hidden');
+            });
+
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+            if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+
+            // Tutup jika mengklik area gelap backdrop modal
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
         }
     });
 </script>

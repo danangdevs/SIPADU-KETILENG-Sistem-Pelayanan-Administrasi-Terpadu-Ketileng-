@@ -66,6 +66,14 @@
                 pointer-events: none !important;
             }
         }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.15s ease-out;
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-[Inter]">
@@ -119,42 +127,13 @@
                 </svg>
                 Status
             </a>
-            <a href="{{ route('warga.profile') }}"
-               class="sidebar-link {{ request()->routeIs('warga.profile') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-                Profile
-            </a>
         </nav>
-
-        {{-- Bottom --}}
-        <div class="border-t border-slate-800 p-4 space-y-1">
-            <a href="#" class="sidebar-link text-slate-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                Bantuan
-            </a>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="sidebar-link w-full text-red-400 hover:text-red-300 hover:bg-red-900/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
-                    Keluar
-                </button>
-            </form>
-        </div>
     </aside>
 
     {{-- ── MAIN CONTENT ── --}}
     <main id="main-content" class="flex-1 min-w-0 flex flex-col">
-        {{-- ── MOBILE HEADER ── --}}
-        <header class="bg-white border-b border-slate-100 px-6 py-4 flex lg:hidden items-center justify-between sticky top-0 z-30">
+        {{-- ── HEADER (Navigasi Atas) ── --}}
+        <header class="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
             <div class="flex items-center gap-3">
                 <button id="sidebar-toggle" class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg flex-shrink-0" aria-label="Toggle Sidebar">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,8 +142,33 @@
                 </button>
                 <span class="font-bold text-slate-800 text-sm">Portal Warga</span>
             </div>
-            <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-sm font-bold">
-                {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
+            
+            {{-- Profile Dropdown Wrapper --}}
+            <div class="relative" style="position: relative;">
+                <button id="profile-dropdown-btn" class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:bg-emerald-600 transition-colors focus:outline-none">
+                    {{ strtoupper(substr(auth()->user()->name ?? 'W', 0, 1)) }}
+                </button>
+                
+                {{-- Dropdown Card --}}
+                <div id="profile-dropdown-menu" class="hidden absolute mt-2 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 z-50 animate-fade-in-down" style="right: 0;">
+                    <div class="px-4 py-2.5 border-b border-slate-50">
+                        <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Nama Akun</p>
+                        <p class="text-sm font-bold text-slate-800 truncate mt-0.5">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] font-mono text-slate-500 truncate mt-0.5">NIK: {{ auth()->user()->nik }}</p>
+                    </div>
+                    <a href="{{ route('warga.profile') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        Lihat Profil
+                    </a>
+                    <hr class="border-slate-50 my-1">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"/></svg>
+                            Keluar
+                        </button>
+                    </form>
+                </div>
             </div>
         </header>
 
@@ -211,6 +215,23 @@
 
             toggleBtn.addEventListener('click', toggleSidebar);
             overlay.addEventListener('click', toggleSidebar);
+        }
+
+        // ── PROFILE DROPDOWN MENU INTERACTION ──
+        const profileBtn = document.getElementById('profile-dropdown-btn');
+        const profileMenu = document.getElementById('profile-dropdown-menu');
+
+        if (profileBtn && profileMenu) {
+            profileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!profileMenu.contains(e.target) && e.target !== profileBtn) {
+                    profileMenu.classList.add('hidden');
+                }
+            });
         }
     });
 </script>
