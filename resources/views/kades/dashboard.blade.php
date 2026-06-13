@@ -2,52 +2,243 @@
 @section('title', 'Dashboard Persetujuan')
 
 @section('content')
-<div class="mb-8 flex items-end justify-between">
-    <div>
-        <h1 class="text-2xl font-bold text-slate-900">Dashboard Persetujuan</h1>
-        <p class="text-slate-500 mt-1">Selamat datang, Kepala Desa. Terdapat dokumen yang memerlukan tanda tangan Anda.</p>
-    </div>
-    <div class="px-4 py-2 bg-slate-100 rounded-lg text-sm text-slate-600 font-medium flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        {{ now()->locale('id')->isoFormat('D MMMM YYYY') }}
+{{-- Welcome Banner --}}
+<div style="position: relative; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 16px; padding: 28px; margin-bottom: 32px; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25);">
+    <div style="position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; filter: blur(40px);"></div>
+    <div style="position: absolute; right: 80px; bottom: 0; width: 128px; height: 128px; background-color: rgba(255, 255, 255, 0.05); border-radius: 50%; filter: blur(30px);"></div>
+    <div style="position: relative; z-index: 10; display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div>
+            <h1 style="font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.02em; line-height: 1.2;">Selamat Datang, Kepala Desa!</h1>
+            <p style="color: rgba(239, 246, 255, 0.9); font-size: 13px; margin: 8px 0 0 0; max-width: 500px; line-height: 1.5;">
+                Silakan tinjau dan berikan persetujuan digital (TTE) pada permohonan surat warga Desa Ketileng.
+            </p>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0;">
+            <span style="padding: 4px 12px; background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 9999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                Hari Ini
+            </span>
+            <p style="font-size: 13px; font-weight: 600; color: #f1f5f9; margin: 4px 0 0 0;">
+                {{ now()->locale('id')->isoFormat('D MMMM YYYY') }}
+            </p>
+        </div>
     </div>
 </div>
 
+{{-- Stat Cards --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="card flex items-center justify-between">
+    <div class="card glass-card" style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
         <div>
-            <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Menunggu Persetujuan</p>
-            <p class="text-4xl font-bold text-slate-900">{{ $stats['menunggu'] }}</p>
+            <p style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 6px 0;">Menunggu Persetujuan</p>
+            <p style="font-size: 30px; font-weight: 800; color: #1e293b; margin: 0;">{{ $stats['menunggu'] }}</p>
         </div>
-        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+            <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
     </div>
-    <div class="card flex items-center justify-between border-blue-100 bg-blue-50/30">
+    
+    <div class="card glass-card" style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
         <div>
-            <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Disetujui Hari Ini</p>
-            <p class="text-4xl font-bold text-blue-600">{{ $stats['disetujui'] }}</p>
+            <p style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 6px 0;">Disetujui Hari Ini</p>
+            <p style="font-size: 30px; font-weight: 800; color: #2563eb; margin: 0;">{{ $stats['disetujui'] }}</p>
         </div>
-        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #2563eb, #3b82f6); color: #ffffff; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);">
+            <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
     </div>
-    <div class="card flex items-center justify-between">
+    
+    <div class="card glass-card" style="display: flex; align-items: center; justify-content: space-between; padding: 20px;">
         <div>
-            <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Total Dokumen (Bulan Ini)</p>
-            <p class="text-4xl font-bold text-slate-900">{{ $stats['total_bulan'] }}</p>
+            <p style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 6px 0;">Total Dokumen (Bulan Ini)</p>
+            <p style="font-size: 30px; font-weight: 800; color: #1e293b; margin: 0;">{{ $stats['total_bulan'] }}</p>
         </div>
-        <div class="w-12 h-12 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #64748b, #475569); color: #ffffff; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(100, 116, 139, 0.2);">
+            <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
         </div>
     </div>
 </div>
 
-<div class="card p-0 overflow-hidden">
-    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
-        <h2 class="text-lg font-bold text-slate-800">Dokumen Menunggu Tanda Tangan</h2>
+{{-- Charts --}}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    {{-- Chart 1: Tren Bulanan --}}
+    <div class="card glass-card lg:col-span-2" style="padding: 24px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0;">Tren Pengajuan Surat (Tahun {{ now()->year }})</h3>
+        <div id="monthly-chart" style="min-height: 280px;"></div>
     </div>
-    <div class="overflow-x-auto">
+
+    {{-- Chart 2: Jenis Surat Terpopuler --}}
+    <div class="card glass-card" style="padding: 24px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: #1e293b; margin: 0 0 16px 0;">Jenis Surat Terpopuler</h3>
+        <div id="popular-chart" style="min-height: 280px; display: flex; align-items: center; justify-content: center;"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 1. Monthly Chart Options
+        var monthlyOptions = {
+            chart: {
+                type: 'area',
+                height: 280,
+                toolbar: {
+                    show: true,
+                    tools: {
+                        download: true,
+                        selection: false,
+                        zoom: false,
+                        zoomin: false,
+                        zoomout: false,
+                        pan: false,
+                        reset: false
+                    }
+                },
+                fontFamily: 'Inter, sans-serif'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 3,
+                colors: ['#2563eb']
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [0, 90, 100]
+                }
+            },
+            series: [{
+                name: 'Pengajuan',
+                data: @json($monthlyChartData)
+            }],
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                labels: {
+                    style: {
+                        colors: '#64748b',
+                        fontSize: '11px',
+                        fontWeight: 600
+                    }
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: '#64748b',
+                        fontSize: '11px',
+                        fontWeight: 600
+                    }
+                }
+            },
+            grid: {
+                borderColor: '#f1f5f9',
+                strokeDashArray: 4
+            },
+            theme: {
+                mode: 'light'
+            },
+            tooltip: {
+                theme: 'light',
+                x: {
+                    show: true
+                }
+            }
+        };
+
+        var monthlyChart = new ApexCharts(document.querySelector("#monthly-chart"), monthlyOptions);
+        monthlyChart.render();
+
+        // 2. Popular Chart Options
+        var popularOptions = {
+            chart: {
+                type: 'donut',
+                height: 280,
+                fontFamily: 'Inter, sans-serif'
+            },
+            series: @json($popularChartSeries),
+            labels: @json($popularChartLabels),
+            colors: ['#2563eb', '#10b981', '#f59e0b', '#7c3aed', '#ef4444'],
+            legend: {
+                position: 'bottom',
+                fontSize: '11px',
+                fontWeight: 600,
+                labels: {
+                    colors: '#475569'
+                },
+                markers: {
+                    radius: 12
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontSize: '11px',
+                    fontWeight: 700
+                },
+                dropShadow: {
+                    enabled: false
+                }
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '70%',
+                        labels: {
+                            show: true,
+                            name: {
+                                show: true,
+                                fontSize: '12px',
+                                fontWeight: 700,
+                                color: '#64748b'
+                            },
+                            value: {
+                                show: true,
+                                fontSize: '18px',
+                                fontWeight: 800,
+                                color: '#1e293b'
+                            },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                color: '#64748b',
+                                formatter: function (w) {
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                theme: 'light'
+            }
+        };
+
+        var popularChart = new ApexCharts(document.querySelector("#popular-chart"), popularOptions);
+        popularChart.render();
+    });
+</script>
+
+{{-- Antrean Dokumen --}}
+<div class="card glass-card" style="padding: 0; overflow: hidden; margin-bottom: 32px;">
+    <div style="padding: 20px; border-bottom: 1px solid rgba(241, 245, 249, 0.8); display: flex; align-items: center; justify-content: space-between; background: rgba(250, 250, 250, 0.5);">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #f59e0b; display: inline-block;"></span>
+            <h2 style="font-size: 15px; font-weight: 700; color: #1e293b; margin: 0;">Dokumen Menunggu Tanda Tangan</h2>
+        </div>
+        <a href="{{ route('kades.surat-disetujui') }}" style="font-size: 11px; font-weight: 700; color: #2563eb; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">Arsip Disetujui</a>
+    </div>
+    <div style="overflow-x: auto;">
         <table class="data-table">
             <thead>
                 <tr>
@@ -61,33 +252,47 @@
             <tbody>
                 @forelse($antrean as $p)
                 <tr>
-                    <td>
-                        <p class="font-semibold text-slate-800">{{ $p->penduduk->nama }}</p>
-                        <p class="text-xs text-slate-500">NIK: {{ $p->penduduk->nik }}</p>
+                    <td style="padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 1px solid #dbeafe; flex-shrink: 0;">
+                                {{ strtoupper(substr($p->penduduk->nama, 0, 1)) }}
+                            </div>
+                            <div>
+                                <p style="font-weight: 700; color: #1e293b; margin: 0;">{{ $p->penduduk->nama }}</p>
+                                <p style="font-size: 11px; color: #64748b; margin: 2px 0 0 0;">NIK: {{ $p->penduduk->nik }}</p>
+                            </div>
+                        </div>
                     </td>
-                    <td class="font-medium text-slate-800">{{ $p->jenisSurat->nama }}</td>
-                    <td class="text-slate-600 max-w-xs truncate">{{ $p->keperluan }}</td>
-                    <td class="text-slate-600">{{ $p->verified_at ? $p->verified_at->format('d M Y, H:i') : '-' }}</td>
+                    <td style="font-weight: 700; color: #1e293b;">{{ $p->jenisSurat->nama }}</td>
+                    <td style="color: #475569; max-w-xs truncate; font-size: 12px;">{{ $p->keperluan }}</td>
+                    <td style="color: #64748b; font-size: 12px;">
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <svg style="width: 14px; height: 14px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>{{ $p->verified_at ? $p->verified_at->format('d M Y, H:i') : '-' }} WIB</span>
+                        </div>
+                    </td>
                     <td class="text-center">
-                        <a href="{{ route('kades.review', $p) }}" class="btn-outline px-4 py-2 text-sm bg-white">
+                        <a href="{{ route('kades.review', $p) }}" class="btn-primary" style="padding: 6px 12px; font-size: 11px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex;">
                             Tinjau Dokumen
                         </a>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-16 text-slate-500">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <p class="font-medium">Tidak ada antrean dokumen</p>
-                        <p class="text-sm mt-1">Semua dokumen telah disetujui.</p>
+                    <td colspan="5" style="text-align: center; padding: 48px; color: #64748b;">
+                        <svg style="width: 48px; height: 48px; margin: 0 auto 12px auto; color: #cbd5e1; display: block;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <p style="font-weight: 700; color: #475569; margin: 0 0 4px 0;">Tidak ada antrean dokumen</p>
+                        <p style="font-size: 11px; color: #94a3b8; margin: 0;">Semua berkas pengajuan warga saat ini telah selesai ditinjau.</p>
                     </td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+    @if($antrean->hasPages())
     <div class="p-4 border-t border-slate-100">
         {{ $antrean->links() }}
     </div>
+    @endif
 </div>
 @endsection

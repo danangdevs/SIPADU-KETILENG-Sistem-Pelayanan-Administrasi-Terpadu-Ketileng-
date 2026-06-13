@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="card p-0 overflow-hidden">
+<div class="card glass-card p-0 overflow-hidden">
     <div class="p-4 border-b border-slate-100 bg-slate-50 flex flex-wrap gap-4 items-center justify-between">
         <div class="flex gap-2">
             <a href="{{ route('admin.verifikasi.index', ['status' => 'menunggu']) }}" 

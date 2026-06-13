@@ -8,7 +8,7 @@
         <p class="text-slate-500 text-sm mt-1">Informasi akun dan data kependudukan Anda.</p>
     </div>
 
-    <div class="card space-y-6">
+    <div class="card glass-card space-y-6">
         <div>
             <h2 class="text-lg font-semibold text-slate-800 border-b border-slate-100 pb-2 mb-4">Informasi Akun</h2>
             <div class="grid grid-cols-2 gap-4 text-sm">
