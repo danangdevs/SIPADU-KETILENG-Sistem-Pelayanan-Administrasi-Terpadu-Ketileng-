@@ -55,12 +55,18 @@
 
 <div class="card p-0 overflow-hidden">
     <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-        <form method="GET" action="{{ route('admin.penduduk.index') }}" class="relative w-72">
-            <input type="text" name="search" value="{{ $search }}" placeholder="Cari NIK, Nama, Dusun..." class="form-input pl-9 py-2 text-sm">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            @if($search)
-                <a href="{{ route('admin.penduduk.index') }}" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
-            @endif
+        <form method="GET" action="{{ route('admin.penduduk.index') }}" class="flex items-center gap-2">
+            <div class="relative w-72">
+                <input type="text" name="search" value="{{ $search }}" placeholder="Cari NIK, Nama, Dusun..." class="form-input pl-9 pr-8 py-2 text-sm">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                @if($search)
+                    <a href="{{ route('admin.penduduk.index') }}" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></a>
+                @endif
+            </div>
+            <button type="submit" style="background-color: #2563eb; color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.2s;">
+                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Cari
+            </button>
         </form>
     </div>
     <div class="overflow-x-auto">

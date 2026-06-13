@@ -16,7 +16,7 @@
 </div>
 
 {{-- Search & Filters --}}
-<div class="card mb-6">
+<div class="card glass-card mb-6">
     <form method="GET" action="{{ route('admin.arsip') }}" class="flex flex-wrap items-end gap-4">
         <div class="flex-1 min-w-[220px]">
             <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Cari</label>
@@ -67,7 +67,7 @@
 </div>
 
 {{-- Data Table --}}
-<div class="card p-0 overflow-hidden">
+<div class="card glass-card p-0 overflow-hidden">
     <div class="p-5 border-b border-slate-100 flex items-center justify-between">
         <h2 class="text-lg font-bold text-slate-800">Daftar Arsip Surat Selesai</h2>
         <span class="text-sm text-slate-500">{{ $pengajuan->total() }} surat ditemukan</span>

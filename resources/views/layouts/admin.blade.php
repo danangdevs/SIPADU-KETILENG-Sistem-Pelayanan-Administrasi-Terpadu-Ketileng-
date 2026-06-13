@@ -75,10 +75,47 @@
         .animate-fade-in-down {
             animation: fadeInDown 0.15s ease-out;
         }
+
+        /* ── PREMIUM AURORA GLASSMORPHISM ── */
+        body {
+            background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 40%, #ecfdf5 100%) !important;
+        }
+        #main-content {
+            background: transparent !important;
+            position: relative;
+        }
+        .aurora-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.85;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.55) !important;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.07), 0 1px 3px rgba(0,0,0,0.05) !important;
+            position: relative;
+            z-index: 1;
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.13), 0 2px 8px rgba(0,0,0,0.07) !important;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-[Inter]">
 <div class="flex min-h-screen">
+    {{-- AURORA BLOBS --}}
+    <div class="aurora-blob" style="width:520px;height:520px;background:rgba(99,102,241,0.13);top:-80px;right:-60px;"></div>
+    <div class="aurora-blob" style="width:420px;height:420px;background:rgba(59,130,246,0.11);top:250px;left:-80px;"></div>
+    <div class="aurora-blob" style="width:360px;height:360px;background:rgba(16,185,129,0.09);bottom:80px;right:120px;"></div>
+    <div class="aurora-blob" style="width:300px;height:300px;background:rgba(168,85,247,0.10);bottom:220px;left:220px;"></div>
+
     {{-- OVERLAY BACKDROP --}}
     <div id="sidebar-overlay"></div>
 
@@ -121,14 +158,22 @@
 
     {{-- MAIN --}}
     <div id="main-content" class="flex-1 flex flex-col min-w-0">
-        <header class="bg-white border-b border-slate-100 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-30">
+        <header class="px-4 md:px-8 py-3.5 flex items-center justify-between sticky top-0 z-30" style="background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); z-index: 100;">
             <div class="flex items-center gap-3">
                 <button id="sidebar-toggle" class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg flex-shrink-0" aria-label="Toggle Sidebar">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
-                <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Overview</p>
+                <div class="flex items-center gap-2.5">
+                    <div style="width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 4px;">
+                        <img src="{{ asset('download.png') }}" alt="Logo Desa" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.2;">
+                        <span style="font-weight: 800; color: #1e293b; font-size: 13px; letter-spacing: -0.01em;">Dashboard Admin</span>
+                        <span style="font-size: 10px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Desa Ketileng</span>
+                    </div>
+                </div>
             </div>
             <div class="flex items-center gap-3">
                 @php $notif = \App\Models\PengajuanSurat::where('status','menunggu')->count(); @endphp
@@ -138,13 +183,17 @@
                         @if($notif > 0)<span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">{{ $notif }}</span>@endif
                     </a>
                 </div>
-                <div class="relative" style="position: relative;">
+                <div class="relative" style="position: relative; display: flex; align-items: center; gap: 12px;">
+                    <div style="text-align: right; line-height: 1.3;" class="hidden sm:block">
+                        <p style="font-size: 12px; font-weight: 700; color: #334155; margin: 0;">{{ explode(' ', auth()->user()->name)[0] }}</p>
+                        <p style="font-size: 9px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Administrator</p>
+                    </div>
                     <button id="profile-dropdown-btn" class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold shadow-sm hover:bg-blue-600 transition-colors focus:outline-none">
                         {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                     </button>
                     
                     {{-- Dropdown Card --}}
-                    <div id="profile-dropdown-menu" class="hidden absolute mt-2 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 z-50 animate-fade-in-down" style="right: 0;">
+                    <div id="profile-dropdown-menu" class="hidden absolute mt-2 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 z-50 animate-fade-in-down" style="right: 0; z-index: 110; position: absolute; top: 100%;">
                         <div class="px-4 py-2.5 border-b border-slate-50 text-left">
                             <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Nama Akun</p>
                             <p class="text-sm font-bold text-slate-800 truncate mt-0.5">{{ auth()->user()->name }}</p>

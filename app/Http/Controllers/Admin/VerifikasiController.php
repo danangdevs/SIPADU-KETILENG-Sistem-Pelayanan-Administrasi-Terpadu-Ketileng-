@@ -64,7 +64,7 @@ class VerifikasiController extends Controller
             $query->whereYear('approved_at', $tahun);
         }
 
-        $pengajuan = $query->latest('approved_at')->paginate(15)->withQueryString();
+        $pengajuan = $query->latest('approved_at')->paginate(10)->withQueryString();
         
         $jenisSuratList = \App\Models\JenisSurat::where('aktif', true)->get();
 

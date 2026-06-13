@@ -25,7 +25,40 @@ class DashboardController extends Controller
             ->latest('verified_at')
             ->paginate(10);
 
-        return view('kades.dashboard', compact('stats', 'antrean'));
+        // Chart 1: Tren Pengajuan Bulanan (Tahun Berjalan)
+        $submissionsThisYear = PengajuanSurat::whereYear('created_at', now()->year)->get();
+        $monthlyChartData = array_fill(0, 12, 0);
+        foreach ($submissionsThisYear as $p) {
+            if ($p->created_at) {
+                $monthIndex = $p->created_at->month - 1;
+                $monthlyChartData[$monthIndex]++;
+            }
+        }
+
+        // Chart 2: Jenis Surat Terpopuler (Top 5)
+        $popularLetters = PengajuanSurat::with('jenisSurat')
+            ->get()
+            ->groupBy(function($item) {
+                return $item->jenisSurat ? $item->jenisSurat->nama : 'Lainnya';
+            })
+            ->map(function($group) {
+                return $group->count();
+            })
+            ->sortByDesc(function($count) {
+                return $count;
+            })
+            ->take(5);
+
+        $popularChartLabels = $popularLetters->keys()->all();
+        $popularChartSeries = $popularLetters->values()->all();
+
+        return view('kades.dashboard', compact(
+            'stats', 
+            'antrean', 
+            'monthlyChartData', 
+            'popularChartLabels', 
+            'popularChartSeries'
+        ));
     }
 
     /**
@@ -62,7 +95,7 @@ class DashboardController extends Controller
             $query->whereYear('approved_at', $tahun);
         }
 
-        $suratSelesai = $query->latest('approved_at')->paginate(15)->withQueryString();
+        $suratSelesai = $query->latest('approved_at')->paginate(10)->withQueryString();
 
         $jenisSuratList = \App\Models\JenisSurat::where('aktif', true)->get();
 

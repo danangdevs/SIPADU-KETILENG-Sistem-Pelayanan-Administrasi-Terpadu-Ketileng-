@@ -111,11 +111,45 @@
                 </script>
             @else
                 {{-- Keperluan --}}
+                @php
+                    $placeholder = 'Contoh: Keperluan melamar pekerjaan, pendaftaran sekolah...';
+                    if (isset($jenisSurat)) {
+                        switch (strtoupper($jenisSurat->kode)) {
+                            case 'SKD':
+                                $placeholder = 'Contoh: Syarat membuka rekening bank, pendaftaran sekolah...';
+                                break;
+                            case 'SKCK':
+                                $placeholder = 'Contoh: Melamar pekerjaan di PT, pendaftaran seleksi CPNS...';
+                                break;
+                            case 'SKTM':
+                                $placeholder = 'Contoh: Pengajuan beasiswa KIP Kuliah, keringanan biaya rumah sakit...';
+                                break;
+                            case 'SKU':
+                                $placeholder = 'Contoh: Syarat pinjaman modal KUR Bank, pembuatan izin usaha...';
+                                break;
+                            case 'KEMATIAN':
+                                $placeholder = 'Contoh: Melaporkan wafatnya Alm. (Nama) pada tanggal (Tanggal)...';
+                                break;
+                            case 'KELAHIRAN':
+                                $placeholder = 'Contoh: Melaporkan kelahiran anak kandung bernama (Nama) pada tanggal (Tanggal)...';
+                                break;
+                            case 'PINDAH':
+                                $placeholder = 'Contoh: Syarat pindah domisili ke Kelurahan (Nama) Kecamatan (Nama)...';
+                                break;
+                            case 'BEDA_NAMA':
+                                $placeholder = 'Contoh: Penyelarasan beda nama di KTP (Nama A) dengan Ijazah (Nama B)...';
+                                break;
+                            case 'BELUM_NIKAH':
+                                $placeholder = 'Contoh: Syarat pendaftaran nikah di KUA, melamar pekerjaan...';
+                                break;
+                        }
+                    }
+                @endphp
                 <div>
                     <label class="form-label">Keperluan / Tujuan Pengajuan <span class="text-red-500">*</span></label>
                     <textarea name="keperluan" rows="3"
                               class="form-input resize-none @error('keperluan') border-red-400 @enderror"
-                              placeholder="Contoh: Untuk keperluan melamar pekerjaan di PT. ..."
+                              placeholder="{{ $placeholder }}"
                               required>{{ old('keperluan') }}</textarea>
                     @error('keperluan')<p class="form-error">{{ $message }}</p>@enderror
                 </div>

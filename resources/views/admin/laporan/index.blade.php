@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="card mb-6 bg-slate-50 border-none">
+<div class="card glass-card mb-6">
     <form method="GET" action="{{ route('admin.laporan') }}" class="flex flex-wrap items-end gap-4">
         <div>
             <label class="form-label text-slate-700">Bulan</label>
@@ -36,25 +36,25 @@
 </div>
 
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div class="card-sm text-center">
+    <div class="card-sm glass-card text-center">
         <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Total Pengajuan</p>
         <p class="text-3xl font-bold text-slate-900">{{ $rekap['total'] }}</p>
     </div>
-    <div class="card-sm text-center">
+    <div class="card-sm glass-card text-center">
         <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Selesai</p>
         <p class="text-3xl font-bold text-blue-600">{{ $rekap['selesai'] }}</p>
     </div>
-    <div class="card-sm text-center">
+    <div class="card-sm glass-card text-center">
         <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Dalam Proses</p>
         <p class="text-3xl font-bold text-blue-600">{{ $rekap['proses'] }}</p>
     </div>
-    <div class="card-sm text-center">
+    <div class="card-sm glass-card text-center">
         <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Ditolak</p>
         <p class="text-3xl font-bold text-red-600">{{ $rekap['ditolak'] }}</p>
     </div>
 </div>
 
-<div class="card p-0 overflow-hidden printable">
+<div class="card glass-card p-0 overflow-hidden printable">
     <div class="p-5 border-b border-slate-100 print:hidden">
         <h2 class="text-lg font-bold text-slate-800">Detail Transaksi Bulan {{ $bulanList[$bulan] }} {{ $tahun }}</h2>
     </div>

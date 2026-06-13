@@ -63,7 +63,7 @@
             <div class="space-y-6">
                 <div class="space-y-3">
                     <h1 class="text-white text-4xl font-bold leading-tight">
-                        Transformasi<br>Layanan Publik<br>Desa Anda
+                        Transformasi<br>Layanan Publik<br>Desa Ketileng
                     </h1>
                     <p class="text-slate-200 text-base leading-relaxed max-w-sm">
                         Platform tata kelola modern untuk administrasi yang lebih cepat, transparan,

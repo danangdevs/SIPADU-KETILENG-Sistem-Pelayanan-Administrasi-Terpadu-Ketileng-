@@ -24,7 +24,7 @@ class PendudukController extends Controller
                           ->orWhere('desa', 'like', "%{$search}%");
                     })
                     ->latest()
-                    ->paginate(15)
+                    ->paginate(10)
                     ->withQueryString();
 
         return view('admin.penduduk.index', compact('penduduk', 'search'));

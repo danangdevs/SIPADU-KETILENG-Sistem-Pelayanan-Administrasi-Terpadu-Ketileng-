@@ -52,7 +52,7 @@ class DashboardController extends Controller
 
     /**
      * Update kata sandi Admin.
-     */
+      */
     public function updatePassword(\Illuminate\Http\Request $request)
     {
         $request->validate([
